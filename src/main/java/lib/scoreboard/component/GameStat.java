@@ -18,6 +18,19 @@ public class GameStat {
         this.awayTeamScore = 0;
     }
 
+    public GameStat(String homeTeam, String awayTeam, Integer homeTeamScore, Integer awayTeamScore) {
+        this.gameId = UUID.randomUUID();
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeTeamScore = homeTeamScore;
+        this.awayTeamScore = awayTeamScore;
+    }
+
+    public void updateScore(Integer homeTeamScore, Integer awayTeamScore){
+        this.homeTeamScore = homeTeamScore;
+        this.awayTeamScore = awayTeamScore;
+    }
+
     public UUID getGameId() {
         return gameId;
     }
@@ -43,4 +56,5 @@ public class GameStat {
         result = 31 * result + awayTeamScore.hashCode();
         return result;
     }
+
 }

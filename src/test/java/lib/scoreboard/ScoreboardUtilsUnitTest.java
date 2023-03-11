@@ -4,6 +4,8 @@ import lib.scoreboard.component.GameStat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreboardUtilsUnitTest {
@@ -32,19 +34,19 @@ class ScoreboardUtilsUnitTest {
         assertThat(scoreboardUtils.getSummary().get(0)).isEqualTo(expectedGameStat);
     }
 
-//    @Test
-//    public void shouldUpdateGameScore_whenUpdateScore_givenGameIdAndTeamScores(){
-//        // given
-//        UUID gameId = scoreboardUtils.startGame(HOME_TEAM, AWAY_TEAM);
-//        GameStat expectedGameStat = new GameStat(HOME_TEAM, AWAY_TEAM, 1, 2);
-//
-//        // when
-//        scoreboardUtils.updateScore(gameId, 1, 2);
-//
-//        // then
-//        assertThat(scoreboardUtils.getSummary().size()).isEqualTo(1);
-//        assertThat(scoreboardUtils.getSummary().get(0)).isEqualTo(expectedGameStat);
-//    }
+    @Test
+    public void shouldUpdateGameScore_whenUpdateScore_givenGameIdAndTeamScores(){
+        // given
+        UUID gameId = scoreboardUtils.startGame(HOME_TEAM, AWAY_TEAM);
+        GameStat expectedGameStat = new GameStat(HOME_TEAM, AWAY_TEAM, 1, 2);
+
+        // when
+        scoreboardUtils.updateScore(gameId, 1, 2);
+
+        // then
+        assertThat(scoreboardUtils.getSummary().size()).isEqualTo(1);
+        assertThat(scoreboardUtils.getSummary().get(0)).isEqualTo(expectedGameStat);
+    }
 //
 //    @Test
 //    public void shouldRemoveGame_whenFinishGame_givenGameId(){
