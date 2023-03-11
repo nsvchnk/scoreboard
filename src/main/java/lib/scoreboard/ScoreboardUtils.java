@@ -18,7 +18,14 @@ public class ScoreboardUtils {
         stats.get(gameId).updateScore(homeTeamScore, awayTeamScore);
     }
 
+    public void finishGame(UUID gameId) {
+        stats.remove(gameId);
+    }
+
     public List<GameStat> getSummary() {
-        return (stats.values()).stream().toList();
+        List<GameStat> statList = new ArrayList<>((stats.values()).stream().toList());
+        statList.sort((Comparator.comparing(GameStat::getTotalScore)
+                .thenComparing(GameStat::getStartDate)).reversed());
+        return statList;
     }
 }

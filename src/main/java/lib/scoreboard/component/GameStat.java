@@ -1,5 +1,6 @@
 package lib.scoreboard.component;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class GameStat {
@@ -9,6 +10,7 @@ public class GameStat {
     private final String awayTeam;
     private Integer homeTeamScore;
     private Integer awayTeamScore;
+    private LocalDateTime startDate;
 
     public GameStat(String homeTeam, String awayTeam) {
         this.gameId = UUID.randomUUID();
@@ -16,6 +18,7 @@ public class GameStat {
         this.awayTeam = awayTeam;
         this.homeTeamScore = 0;
         this.awayTeamScore = 0;
+        this.startDate = LocalDateTime.now();
     }
 
     public GameStat(String homeTeam, String awayTeam, Integer homeTeamScore, Integer awayTeamScore) {
@@ -33,6 +36,30 @@ public class GameStat {
 
     public UUID getGameId() {
         return gameId;
+    }
+
+    public String getHomeTeam() {
+        return homeTeam;
+    }
+
+    public String getAwayTeam() {
+        return awayTeam;
+    }
+
+    public Integer getHomeTeamScore() {
+        return homeTeamScore;
+    }
+
+    public Integer getAwayTeamScore() {
+        return awayTeamScore;
+    }
+
+    public Integer getTotalScore(){
+        return homeTeamScore + awayTeamScore;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
     @Override
