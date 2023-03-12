@@ -78,6 +78,7 @@ class ScoreboardUtilsUnitTest {
                 .isEqualTo(expectedGameStats);
     }
 
+    // wait time added so that all games start at a bit different time
     private void prepareGameStats() throws InterruptedException {
         UUID gameId;
         gameId = scoreboardUtils.startGame("Mexico", "Canada");
