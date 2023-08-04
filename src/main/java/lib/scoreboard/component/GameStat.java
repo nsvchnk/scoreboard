@@ -29,7 +29,7 @@ public class GameStat {
         this.awayTeamScore = awayTeamScore;
     }
 
-    public void updateScore(Integer homeTeamScore, Integer awayTeamScore){
+    public void updateScore(Integer homeTeamScore, Integer awayTeamScore) {
         this.homeTeamScore = homeTeamScore;
         this.awayTeamScore = awayTeamScore;
     }
@@ -54,7 +54,7 @@ public class GameStat {
         return awayTeamScore;
     }
 
-    public Integer getTotalScore(){
+    public Integer getTotalScore() {
         return homeTeamScore + awayTeamScore;
     }
 

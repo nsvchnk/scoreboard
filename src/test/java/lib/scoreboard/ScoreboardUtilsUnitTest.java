@@ -22,12 +22,12 @@ class ScoreboardUtilsUnitTest {
 
     private ScoreboardUtils scoreboardUtils;
 
-    private static Stream<Arguments> teamValidations(){
+    private static Stream<Arguments> teamValidations() {
         return Stream.of(
-            Arguments.of(HOME_TEAM, null, "Team must be not null"),
-            Arguments.of("       ", HOME_TEAM, "Team must be not blank"),
-            Arguments.of(HOME_TEAM, HOME_TEAM, "Home and away teams must be different"),
-            Arguments.of(HOME_TEAM, AWAY_TEAM, "One or both of the teams are already playing")
+                Arguments.of(HOME_TEAM, null, "Team must be not null"),
+                Arguments.of("       ", HOME_TEAM, "Team must be not blank"),
+                Arguments.of(HOME_TEAM, HOME_TEAM, "Home and away teams must be different"),
+                Arguments.of(HOME_TEAM, AWAY_TEAM, "One or both of the teams are already playing")
         );
     }
 
@@ -37,7 +37,7 @@ class ScoreboardUtilsUnitTest {
     }
 
     @Test
-    public void shouldAddNewGameWithInitialScore_whenStartGame_givenHomeTeamAndAwayTeam(){
+    public void shouldAddNewGameWithInitialScore_whenStartGame_givenHomeTeamAndAwayTeam() {
         // given
         // HOME_TEAM and AWAY_TEAM
         GameStat expectedGameStat = new GameStat(HOME_TEAM, AWAY_TEAM);
@@ -53,7 +53,7 @@ class ScoreboardUtilsUnitTest {
     @ParameterizedTest
     @MethodSource("teamValidations")
     public void shouldThrowIllegalArgumentException_whenStartGame_givenInvalidTeams(
-            String homeTeam, String awayTeam, String expectedExceptionMessage){
+            String homeTeam, String awayTeam, String expectedExceptionMessage) {
         // given test parameters
         scoreboardUtils.startGame("someteam", AWAY_TEAM);
 
@@ -63,7 +63,7 @@ class ScoreboardUtilsUnitTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentException_whenUpdateScore_givenInvalidScore(){
+    public void shouldThrowIllegalArgumentException_whenUpdateScore_givenInvalidScore() {
         // given
         Integer homeTeamScore = 0;
         Integer awayTeamScore = -1;
@@ -76,7 +76,7 @@ class ScoreboardUtilsUnitTest {
     }
 
     @Test
-    public void shouldUpdateGameScore_whenUpdateScore_givenGameIdAndTeamScores(){
+    public void shouldUpdateGameScore_whenUpdateScore_givenGameIdAndTeamScores() {
         // given
         UUID gameId = scoreboardUtils.startGame(HOME_TEAM, AWAY_TEAM);
         GameStat expectedGameStat = new GameStat(HOME_TEAM, AWAY_TEAM, 1, 2);
@@ -90,7 +90,7 @@ class ScoreboardUtilsUnitTest {
     }
 
     @Test
-    public void shouldRemoveGame_whenFinishGame_givenGameId(){
+    public void shouldRemoveGame_whenFinishGame_givenGameId() {
         // given
         UUID gameId = scoreboardUtils.startGame(HOME_TEAM, AWAY_TEAM);
         assertThat(scoreboardUtils.getSummary().size()).isEqualTo(1);
@@ -136,7 +136,7 @@ class ScoreboardUtilsUnitTest {
         scoreboardUtils.updateScore(gameId, 3, 1);
     }
 
-    private List<GameStat> expectedGameStatList(){
+    private List<GameStat> expectedGameStatList() {
         List<GameStat> gameStatList = new ArrayList<>();
         gameStatList.add(new GameStat("Uruguay", "Italy", 6, 6));
         gameStatList.add(new GameStat("Spain", "Brazil", 10, 2));

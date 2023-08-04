@@ -33,28 +33,28 @@ public class ScoreboardUtils {
         return statList;
     }
 
-    private void validateTeams(String homeTeam, String awayTeam){
-        if(homeTeam == null || awayTeam == null){
+    private void validateTeams(String homeTeam, String awayTeam) {
+        if (homeTeam == null || awayTeam == null) {
             throw new IllegalArgumentException("Team must be not null");
         }
 
-        if(homeTeam.isBlank() || awayTeam.isBlank()){
+        if (homeTeam.isBlank() || awayTeam.isBlank()) {
             throw new IllegalArgumentException("Team must be not blank");
         }
 
-        if(homeTeam.equals(awayTeam)){
+        if (homeTeam.equals(awayTeam)) {
             throw new IllegalArgumentException("Home and away teams must be different");
         }
 
         Set<String> playingTeams = stats.values().stream()
                 .flatMap(stat -> Stream.of(stat.getHomeTeam(), stat.getAwayTeam())).collect(Collectors.toSet());
-        if(playingTeams.contains(homeTeam) || playingTeams.contains(awayTeam)){
+        if (playingTeams.contains(homeTeam) || playingTeams.contains(awayTeam)) {
             throw new IllegalArgumentException("One or both of the teams are already playing");
         }
     }
 
-    private void validateScore(Integer homeTeamScore, Integer awayTeamScore){
-        if(homeTeamScore < 0 || awayTeamScore < 0){
+    private void validateScore(Integer homeTeamScore, Integer awayTeamScore) {
+        if (homeTeamScore < 0 || awayTeamScore < 0) {
             throw new IllegalArgumentException("Score must be positive or zero");
         }
     }
