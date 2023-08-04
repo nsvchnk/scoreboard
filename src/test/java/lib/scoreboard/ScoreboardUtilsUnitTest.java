@@ -3,12 +3,17 @@ package lib.scoreboard;
 import lib.scoreboard.component.GameStat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ScoreboardUtilsUnitTest {
 
@@ -16,6 +21,15 @@ class ScoreboardUtilsUnitTest {
     private static final String AWAY_TEAM = "Canada";
 
     private ScoreboardUtils scoreboardUtils;
+
+    private static Stream<Arguments> teamValidations(){
+        return Stream.of(
+            Arguments.of(HOME_TEAM, null, "Team must be not null"),
+            Arguments.of("       ", HOME_TEAM, "Team must be not blank"),
+            Arguments.of(HOME_TEAM, HOME_TEAM, "Home and away teams must be different"),
+            Arguments.of(HOME_TEAM, AWAY_TEAM, "One or both of the teams are already playing")
+        );
+    }
 
     @BeforeEach
     void setUp() {
@@ -34,6 +48,31 @@ class ScoreboardUtilsUnitTest {
         // then
         assertThat(scoreboardUtils.getSummary().size()).isEqualTo(1);
         assertThat(scoreboardUtils.getSummary().get(0)).isEqualTo(expectedGameStat);
+    }
+
+    @ParameterizedTest
+    @MethodSource("teamValidations")
+    public void shouldThrowIllegalArgumentException_whenStartGame_givenInvalidTeams(
+            String homeTeam, String awayTeam, String expectedExceptionMessage){
+        // given test parameters
+        scoreboardUtils.startGame("someteam", AWAY_TEAM);
+
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> scoreboardUtils.startGame(homeTeam, awayTeam));
+        assertThat(exception.getMessage()).isEqualTo(expectedExceptionMessage);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentException_whenUpdateScore_givenInvalidScore(){
+        // given
+        Integer homeTeamScore = 0;
+        Integer awayTeamScore = -1;
+        String expectedExceptionMessage = "Score must be positive or zero";
+        UUID gameId = scoreboardUtils.startGame(HOME_TEAM, AWAY_TEAM);
+
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> scoreboardUtils.updateScore(gameId, homeTeamScore, awayTeamScore));
+        assertThat(exception.getMessage()).isEqualTo(expectedExceptionMessage);
     }
 
     @Test
